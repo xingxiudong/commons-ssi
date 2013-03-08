@@ -1,0 +1,7 @@
+@charset "UTF-8";
+#ui-datepicker-div { font-size:12px; }
+#ui-datepicker-div select.ui-datepicker-year { width:55px; }
+#ui-datepicker-div select.ui-datepicker-month { width:50px; }
+.ui-widget { font-size:14px; }
+.ui-button-text, .ui-button { font-size:12px; }
+input[type='text'] {margin:0px;}

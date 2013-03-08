@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ebiz.comm.dao.SysModuleDao">
+	<cache />
+
+	<resultMap id="sysModuleMap" type="SysModule">
+		<id column="MOD_ID" property="mod_id" />
+		<result column="PAR_ID" property="par_id" />
+		<result column="MOD_NAME" property="mod_name" />
+		<result column="MOD_DESC" property="mod_desc" />
+		<result column="MOD_URL" property="mod_url" />
+		<result column="IS_PUBLIC" property="is_public" />
+		<result column="ORDER_VALUE" property="order_value" />
+		<result column="IS_LOCK" property="is_lock" />
+		<result column="IS_DEL" property="is_del" />
+	</resultMap>
+
+	<sql id="r_clause_gather_default">
+		<!-- Equal query -->
+		<if test="mod_id != null and mod_id != ''"> and MOD_ID = #{mod_id}</if>
+		<if test="par_id != null and par_id != ''"> and PAR_ID = #{par_id}</if>
+		<if test="mod_name != null and mod_name != ''"> and MOD_NAME = #{mod_name}</if>
+		<if test="mod_desc != null and mod_desc != ''"> and MOD_DESC = #{mod_desc}</if>
+		<if test="mod_url != null and mod_url != ''"> and MOD_URL = #{mod_url}</if>
+		<if test="is_public != null and is_public != ''"> and IS_PUBLIC = #{is_public}</if>
+		<if test="order_value != null and order_value != ''"> and ORDER_VALUE = #{order_value}</if>
+		<if test="is_lock != null and is_lock != ''"> and IS_LOCK = #{is_lock}</if>
+		<if test="is_del != null and is_del != ''"> and IS_DEL = #{is_del}</if>
+
+		<!-- Like query -->
+		<if test="param.mod_name_like != null and param.mod_name_like != ''"> and UPPER(MOD_NAME) like CONCAT('%',UPPER(#{param.mod_name_like}),'%')</if>
+		<if test="param.mod_desc_like != null and param.mod_desc_like != ''"> and UPPER(MOD_DESC) like CONCAT('%',UPPER(#{param.mod_desc_like}),'%')</if>
+		<if test="param.mod_url_like != null and param.mod_url_like != ''"> and UPPER(MOD_URL) like CONCAT('%',UPPER(#{param.mod_url_like}),'%')</if>
+		
+		<!-- Number compare query -->
+		<if test="param.mod_id_gt != null and param.mod_id_gt != ''"><![CDATA[ and MOD_ID > #{param.mod_id_gt}]]></if>
+		<if test="param.mod_id_lt != null and param.mod_id_lt != ''"><![CDATA[ and MOD_ID < #{param.mod_id_lt}]]></if>
+		<if test="param.mod_id_ge != null and param.mod_id_ge != ''"><![CDATA[ and MOD_ID >= #{param.mod_id_ge}]]></if>
+		<if test="param.mod_id_le != null and param.mod_id_le != ''"><![CDATA[ and MOD_ID <= #{param.mod_id_le}]]></if>
+		<if test="param.par_id_gt != null and param.par_id_gt != ''"><![CDATA[ and PAR_ID > #{param.par_id_gt}]]></if>
+		<if test="param.par_id_lt != null and param.par_id_lt != ''"><![CDATA[ and PAR_ID < #{param.par_id_lt}]]></if>
+		<if test="param.par_id_ge != null and param.par_id_ge != ''"><![CDATA[ and PAR_ID >= #{param.par_id_ge}]]></if>
+		<if test="param.par_id_le != null and param.par_id_le != ''"><![CDATA[ and PAR_ID <= #{param.par_id_le}]]></if>
+		<if test="param.is_public_gt != null and param.is_public_gt != ''"><![CDATA[ and IS_PUBLIC > #{param.is_public_gt}]]></if>
+		<if test="param.is_public_lt != null and param.is_public_lt != ''"><![CDATA[ and IS_PUBLIC < #{param.is_public_lt}]]></if>
+		<if test="param.is_public_ge != null and param.is_public_ge != ''"><![CDATA[ and IS_PUBLIC >= #{param.is_public_ge}]]></if>
+		<if test="param.is_public_le != null and param.is_public_le != ''"><![CDATA[ and IS_PUBLIC <= #{param.is_public_le}]]></if>
+		<if test="param.order_value_gt != null and param.order_value_gt != ''"><![CDATA[ and ORDER_VALUE > #{param.order_value_gt}]]></if>
+		<if test="param.order_value_lt != null and param.order_value_lt != ''"><![CDATA[ and ORDER_VALUE < #{param.order_value_lt}]]></if>
+		<if test="param.order_value_ge != null and param.order_value_ge != ''"><![CDATA[ and ORDER_VALUE >= #{param.order_value_ge}]]></if>
+		<if test="param.order_value_le != null and param.order_value_le != ''"><![CDATA[ and ORDER_VALUE <= #{param.order_value_le}]]></if>
+		<if test="param.is_lock_gt != null and param.is_lock_gt != ''"><![CDATA[ and IS_LOCK > #{param.is_lock_gt}]]></if>
+		<if test="param.is_lock_lt != null and param.is_lock_lt != ''"><![CDATA[ and IS_LOCK < #{param.is_lock_lt}]]></if>
+		<if test="param.is_lock_ge != null and param.is_lock_ge != ''"><![CDATA[ and IS_LOCK >= #{param.is_lock_ge}]]></if>
+		<if test="param.is_lock_le != null and param.is_lock_le != ''"><![CDATA[ and IS_LOCK <= #{param.is_lock_le}]]></if>
+		<if test="param.is_del_gt != null and param.is_del_gt != ''"><![CDATA[ and IS_DEL > #{param.is_del_gt}]]></if>
+		<if test="param.is_del_lt != null and param.is_del_lt != ''"><![CDATA[ and IS_DEL < #{param.is_del_lt}]]></if>
+		<if test="param.is_del_ge != null and param.is_del_ge != ''"><![CDATA[ and IS_DEL >= #{param.is_del_ge}]]></if>
+		<if test="param.is_del_le != null and param.is_del_le != ''"><![CDATA[ and IS_DEL <= #{param.is_del_le}]]></if>
+		
+		<!-- Date compare query -->
+	</sql>
+
+	<sql id="ud_clause_gather_default">
+		<choose>
+			<when test="mod_id != null">mod_id=#{mod_id}</when>
+			<when test="mod_id == null">
+				<if test="pks != null">
+					MOD_ID in <foreach item="item" index="index" collection="pks" open="(" separator="," close=")">#{item}</foreach>
+				</if> 
+			</when>
+			<otherwise>1=0</otherwise>
+		</choose>
+	</sql>
+
+	<sql id="orderby_clause_gather_default">
+		<if test="row.sort == null or row.sort == ''"> MOD_ID </if>
+		<if test="row.sort != null and row.sort != ''">
+			<choose>
+				<when test="row.sort == 'mod_id'"> MOD_ID </when>
+				<when test="row.sort == 'par_id'"> PAR_ID </when>
+				<when test="row.sort == 'mod_name'"> MOD_NAME </when>
+				<when test="row.sort == 'mod_desc'"> MOD_DESC </when>
+				<when test="row.sort == 'mod_url'"> MOD_URL </when>
+				<when test="row.sort == 'is_public'"> IS_PUBLIC </when>
+				<when test="row.sort == 'order_value'"> ORDER_VALUE </when>
+				<when test="row.sort == 'is_lock'"> IS_LOCK </when>
+				<when test="row.sort == 'is_del'"> IS_DEL </when>
+				<otherwise> MOD_ID </otherwise>
+			</choose>
+		</if>
+		<if test="row.order == null or row.order == ''"> ASC </if>
+		<if test="row.order != null and row.order != ''">
+			<choose>
+				<when test="row.order == 'asc' or row.order == 'ASC'">ASC</when>
+				<when test="row.order == 'desc' or row.order == 'DESC'">DESC</when>
+				<otherwise> ASC </otherwise>
+			</choose>
+		</if>
+	</sql>
+
+	<select id="count" parameterType="SysModule" resultType="long">
+		select count(1) from SYS_MODULE
+		<where>
+			<include refid="r_clause_gather_default"/>
+		</where>
+	</select>
+
+	<select id="select" parameterType="SysModule" resultMap="sysModuleMap">
+		select * from SYS_MODULE
+		<where>
+			<include refid="r_clause_gather_default"/>
+		</where>
+	</select>
+
+	<select id="selectList" parameterType="SysModule" resultMap="sysModuleMap">
+		select * from SYS_MODULE
+		<where>
+			<include refid="r_clause_gather_default"/>
+		</where>
+		order by
+		<include refid="orderby_clause_gather_default"/>
+	</select>
+
+	<select id="selectPaginatedList" parameterType="SysModule" resultMap="sysModuleMap">
+		select * from SYS_MODULE
+		<where>
+			<include refid="r_clause_gather_default"/>
+		</where>
+		order by
+		<include refid="orderby_clause_gather_default"/>
+		limit #{row.first}, #{row.count}
+	</select>
+
+	<insert id="insert" parameterType="SysModule">
+		<![CDATA[insert into SYS_MODULE ( ]]>
+		<trim suffixOverrides=","> 
+			<if test="mod_id != null and mod_id != ''">MOD_ID,</if>
+			<if test="par_id != null and par_id != ''">PAR_ID,</if>
+			<if test="mod_name != null and mod_name != ''">MOD_NAME,</if>
+			<if test="mod_desc != null and mod_desc != ''">MOD_DESC,</if>
+			<if test="mod_url != null and mod_url != ''">MOD_URL,</if>
+			<if test="is_public != null and is_public != ''">IS_PUBLIC,</if>
+			<if test="order_value != null and order_value != ''">ORDER_VALUE,</if>
+			<if test="is_lock != null and is_lock != ''">IS_LOCK,</if>
+			<if test="is_del != null and is_del != ''">IS_DEL,</if>
+		</trim>
+		<![CDATA[ ) values ( ]]>
+		<trim suffixOverrides=",">
+			<if test="mod_id != null and mod_id != ''">#{mod_id},</if>
+			<if test="par_id != null and par_id != ''">#{par_id},</if>
+			<if test="mod_name != null and mod_name != ''">#{mod_name},</if>
+			<if test="mod_desc != null and mod_desc != ''">#{mod_desc},</if>
+			<if test="mod_url != null and mod_url != ''">#{mod_url},</if>
+			<if test="is_public != null and is_public != ''">#{is_public},</if>
+			<if test="order_value != null and order_value != ''">#{order_value},</if>
+			<if test="is_lock != null and is_lock != ''">#{is_lock},</if>
+			<if test="is_del != null and is_del != ''">#{is_del},</if>
+		</trim>
+		<![CDATA[ ) ]]>
+	</insert>
+
+	<update id="update" parameterType="SysModule">
+		update SYS_MODULE
+		<set>
+			<if test="mod_id != null and mod_id != ''">MOD_ID = #{mod_id},</if>
+			<if test="par_id != null and par_id != ''">PAR_ID = #{par_id},</if>
+			<if test="mod_name != null and mod_name != ''">MOD_NAME = #{mod_name},</if>
+			<if test="mod_desc != null and mod_desc != ''">MOD_DESC = #{mod_desc},</if>
+			<if test="mod_url != null and mod_url != ''">MOD_URL = #{mod_url},</if>
+			<if test="is_public != null and is_public != ''">IS_PUBLIC = #{is_public},</if>
+			<if test="order_value != null and order_value != ''">ORDER_VALUE = #{order_value},</if>
+			<if test="is_lock != null and is_lock != ''">IS_LOCK = #{is_lock},</if>
+			<if test="is_del != null and is_del != ''">IS_DEL = #{is_del},</if>
+		</set>
+		<where>
+			<include refid="ud_clause_gather_default"/>
+		</where>
+	</update>
+	
+	<delete id="delete" parameterType="SysModule">
+		delete from SYS_MODULE
+		<where>
+			<include refid="ud_clause_gather_default"/>
+		</where>
+	</delete>
+
+</mapper>

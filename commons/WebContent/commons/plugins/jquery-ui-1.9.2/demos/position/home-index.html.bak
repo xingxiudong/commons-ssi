@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery UI Position - Default functionality</title>
+	<link rel="stylesheet" href="../../themes/base/jquery.ui.all.css">
+	<script src="../../jquery-1.8.3.js"></script>
+	<script src="../../ui/jquery.ui.core.js"></script>
+	<script src="../../ui/jquery.ui.widget.js"></script>
+	<script src="../../ui/jquery.ui.mouse.js"></script>
+	<script src="../../ui/jquery.ui.draggable.js"></script>
+	<script src="../../ui/jquery.ui.position.js"></script>
+	<style>
+	.region {
+		position: absolute;
+		--display: block;
+		--background-color: #bcd5e6;
+		text-align: center;
+	}
+	</style>
+	<script>
+	$(function() {
+		var settings = {
+				north : {
+					of : $( "body" ),
+					at : "center top",
+					my : "center top"
+
+				},
+				south : {
+					of : $( "body" ),
+					at : "center bottom",
+					my : "center bottom"
+				},
+				east : {
+					of : $( "#north " ),
+					at : "right bottom"
+				},
+				west : {
+					of : $( "#north" ),
+					at : "left bottom",
+					my : "left top"
+				}
+		};
+
+		$('body').height($(window).height());
+		
+		
+		function position() {
+			$("#north").position(settings.north);
+			$("#south").position(settings.south);
+			$("#east" ).position(settings.east);
+			$("#west").position(settings.west);
+		}
+
+		$( ".region" ).css( "opacity", 0.5 );
+
+		$( ".region" ).draggable({
+			drag: position
+		});
+
+		position();
+	});
+	</script>
+</head>
+<body style="margin:0px;padding:0px;">
+<div class="region" id="north" data-options="region:'north'" style="width:100%;height:50px;border:1px solid #f00;">
+	<p>
+	to position north
+	</p>
+</div>
+
+<div class="region" id="south" data-options="region:'south'" style="width:100%;height:50px;border:1px solid #0f0;">
+	<p>
+	to position south
+	</p>
+</div>
+
+<div class="region" id="east" data-options="region:'east'" style="width:200px;height:100%;border:1px solid #f0f;">
+	<p>
+	to position east
+	</p>
+</div>
+
+<div class="region" id="west" data-options="region:'west'" style="width:200px;height:100%;border:1px solid #0ff;">
+	<p>
+	to position west
+	</p>
+</div>
+
+<div class="region" id="center" data-options="region:'center';border:1px solid #fff;">
+	<p>
+	to position center
+	</p>
+</div>
+</body>
+</html>

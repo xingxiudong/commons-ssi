@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+body {
+	color: #000000;
+	font-size: 14px;
+	margin: 0;
+	background-image: none;
+}
+form {
+	margin: 0px;
+	padding: 0px;
+}
+
+.wrap {
+	width:99%;
+	margin: 0px auto;
+}
+.datagrad {
+	border-collapse: collapse;
+}
+.datagrad th {
+	font-weight:800;
+	background-color:#CCC;
+}
+.form {
+	border-collapse: collapse;
+}
+.form th {
+	font-weight:800;
+	background-color:#CCC;
+}
+.tdLabel {
+	text-align:right;
+	background-color:#eee;
+	font-weight:border;
+}
+.required {
+	color:#F00;
+	padding:0px 5px;
+}
+.query input[type="text"] {
+	height:16px;
+	line-height:16px;
+	padding:0px 16px 0px 0px;
+}
+.opr, .query, .page-ctrl, .body {
+	margin:5px 0px;
+}
+.body a:link,
+.body a:visited { color:#1b75bb; text-decoration:none; }
+.body a:hover,
+.body a:active { color:#0b559b; }

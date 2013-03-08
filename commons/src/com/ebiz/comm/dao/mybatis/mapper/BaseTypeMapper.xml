@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ebiz.comm.dao.BaseTypeDao">
+	<cache />
+
+	<resultMap id="baseTypeMap" type="BaseType">
+		<id column="TYPE_ID" property="type_id" />
+		<result column="TYPE_NAME" property="type_name" />
+		<result column="PAR_TYPE_ID" property="par_type_id" />
+		<result column="ORDER_VALUE" property="order_value" />
+		<result column="IS_DEL" property="is_del" />
+	</resultMap>
+
+	<sql id="r_clause_gather_default">
+		<!-- Equal query -->
+		<if test="type_id != null and type_id != ''"> and TYPE_ID = #{type_id}</if>
+		<if test="type_name != null and type_name != ''"> and TYPE_NAME = #{type_name}</if>
+		<if test="par_type_id != null and par_type_id != ''"> and PAR_TYPE_ID = #{par_type_id}</if>
+		<if test="order_value != null and order_value != ''"> and ORDER_VALUE = #{order_value}</if>
+		<if test="is_del != null and is_del != ''"> and IS_DEL = #{is_del}</if>
+
+		<!-- Like query -->
+		<if test="param.type_name_like != null and param.type_name_like != ''"> and UPPER(TYPE_NAME) like CONCAT('%',UPPER(#{param.type_name_like}),'%')</if>
+		
+		<!-- Number compare query -->
+		<if test="param.type_id_gt != null and param.type_id_gt != ''"><![CDATA[ and TYPE_ID > #{param.type_id_gt}]]></if>
+		<if test="param.type_id_lt != null and param.type_id_lt != ''"><![CDATA[ and TYPE_ID < #{param.type_id_lt}]]></if>
+		<if test="param.type_id_ge != null and param.type_id_ge != ''"><![CDATA[ and TYPE_ID >= #{param.type_id_ge}]]></if>
+		<if test="param.type_id_le != null and param.type_id_le != ''"><![CDATA[ and TYPE_ID <= #{param.type_id_le}]]></if>
+		<if test="param.par_type_id_gt != null and param.par_type_id_gt != ''"><![CDATA[ and PAR_TYPE_ID > #{param.par_type_id_gt}]]></if>
+		<if test="param.par_type_id_lt != null and param.par_type_id_lt != ''"><![CDATA[ and PAR_TYPE_ID < #{param.par_type_id_lt}]]></if>
+		<if test="param.par_type_id_ge != null and param.par_type_id_ge != ''"><![CDATA[ and PAR_TYPE_ID >= #{param.par_type_id_ge}]]></if>
+		<if test="param.par_type_id_le != null and param.par_type_id_le != ''"><![CDATA[ and PAR_TYPE_ID <= #{param.par_type_id_le}]]></if>
+		<if test="param.order_value_gt != null and param.order_value_gt != ''"><![CDATA[ and ORDER_VALUE > #{param.order_value_gt}]]></if>
+		<if test="param.order_value_lt != null and param.order_value_lt != ''"><![CDATA[ and ORDER_VALUE < #{param.order_value_lt}]]></if>
+		<if test="param.order_value_ge != null and param.order_value_ge != ''"><![CDATA[ and ORDER_VALUE >= #{param.order_value_ge}]]></if>
+		<if test="param.order_value_le != null and param.order_value_le != ''"><![CDATA[ and ORDER_VALUE <= #{param.order_value_le}]]></if>
+		<if test="param.is_del_gt != null and param.is_del_gt != ''"><![CDATA[ and IS_DEL > #{param.is_del_gt}]]></if>
+		<if test="param.is_del_lt != null and param.is_del_lt != ''"><![CDATA[ and IS_DEL < #{param.is_del_lt}]]></if>
+		<if test="param.is_del_ge != null and param.is_del_ge != ''"><![CDATA[ and IS_DEL >= #{param.is_del_ge}]]></if>
+		<if test="param.is_del_le != null and param.is_del_le != ''"><![CDATA[ and IS_DEL <= #{param.is_del_le}]]></if>
+		
+		<!-- Date compare query -->
+	</sql>
+
+	<sql id="ud_clause_gather_default">
+		<choose>
+			<when test="type_id != null">type_id=#{type_id}</when>
+			<when test="type_id == null">
+				<if test="pks != null">
+					TYPE_ID in <foreach item="item" index="index" collection="pks" open="(" separator="," close=")">#{item}</foreach>
+				</if> 
+			</when>
+			<otherwise>1=0</otherwise>
+		</choose>
+	</sql>
+
+	<sql id="orderby_clause_gather_default">
+		<if test="row.sort == null or row.sort == ''"> TYPE_ID </if>
+		<if test="row.sort != null and row.sort != ''">
+			<choose>
+				<when test="row.sort == 'type_id'"> TYPE_ID </when>
+				<when test="row.sort == 'type_name'"> TYPE_NAME </when>
+				<when test="row.sort == 'par_type_id'"> PAR_TYPE_ID </when>
+				<when test="row.sort == 'order_value'"> ORDER_VALUE </when>
+				<when test="row.sort == 'is_del'"> IS_DEL </when>
+				<otherwise> TYPE_ID </otherwise>
+			</choose>
+		</if>
+		<if test="row.order == null or row.order == ''"> ASC </if>
+		<if test="row.order != null and row.order != ''">
+			<choose>
+				<when test="row.order == 'asc' or row.order == 'ASC'">ASC</when>
+				<when test="row.order == 'desc' or row.order == 'DESC'">DESC</when>
+				<otherwise> ASC </otherwise>
+			</choose>
+		</if>
+	</sql>
+
+	<select id="count" parameterType="BaseType" resultType="long">
+		select count(1) from BASE_TYPE
+		<where>
+			<include refid="r_clause_gather_default"/>
+		</where>
+	</select>
+
+	<select id="select" parameterType="BaseType" resultMap="baseTypeMap">
+		select * from BASE_TYPE
+		<where>
+			<include refid="r_clause_gather_default"/>
+		</where>
+	</select>
+
+	<select id="selectList" parameterType="BaseType" resultMap="baseTypeMap">
+		select * from BASE_TYPE
+		<where>
+			<include refid="r_clause_gather_default"/>
+		</where>
+		order by
+		<include refid="orderby_clause_gather_default"/>
+	</select>
+
+	<select id="selectPaginatedList" parameterType="BaseType" resultMap="baseTypeMap">
+		select * from BASE_TYPE
+		<where>
+			<include refid="r_clause_gather_default"/>
+		</where>
+		order by
+		<include refid="orderby_clause_gather_default"/>
+		limit #{row.first}, #{row.count}
+	</select>
+
+	<insert id="insert" parameterType="BaseType">
+		<![CDATA[insert into BASE_TYPE ( ]]>
+		<trim suffixOverrides=","> 
+			<if test="type_id != null and type_id != ''">TYPE_ID,</if>
+			<if test="type_name != null and type_name != ''">TYPE_NAME,</if>
+			<if test="par_type_id != null and par_type_id != ''">PAR_TYPE_ID,</if>
+			<if test="order_value != null and order_value != ''">ORDER_VALUE,</if>
+			<if test="is_del != null and is_del != ''">IS_DEL,</if>
+		</trim>
+		<![CDATA[ ) values ( ]]>
+		<trim suffixOverrides=",">
+			<if test="type_id != null and type_id != ''">#{type_id},</if>
+			<if test="type_name != null and type_name != ''">#{type_name},</if>
+			<if test="par_type_id != null and par_type_id != ''">#{par_type_id},</if>
+			<if test="order_value != null and order_value != ''">#{order_value},</if>
+			<if test="is_del != null and is_del != ''">#{is_del},</if>
+		</trim>
+		<![CDATA[ ) ]]>
+	</insert>
+
+	<update id="update" parameterType="BaseType">
+		update BASE_TYPE
+		<set>
+			<if test="type_id != null and type_id != ''">TYPE_ID = #{type_id},</if>
+			<if test="type_name != null and type_name != ''">TYPE_NAME = #{type_name},</if>
+			<if test="par_type_id != null and par_type_id != ''">PAR_TYPE_ID = #{par_type_id},</if>
+			<if test="order_value != null and order_value != ''">ORDER_VALUE = #{order_value},</if>
+			<if test="is_del != null and is_del != ''">IS_DEL = #{is_del},</if>
+		</set>
+		<where>
+			<include refid="ud_clause_gather_default"/>
+		</where>
+	</update>
+	
+	<delete id="delete" parameterType="BaseType">
+		delete from BASE_TYPE
+		<where>
+			<include refid="ud_clause_gather_default"/>
+		</where>
+	</delete>
+
+</mapper>

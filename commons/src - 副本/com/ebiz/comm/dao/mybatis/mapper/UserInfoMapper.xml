@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ebiz.comm.dao.UserInfoDao">
+	<cache />
+
+	<resultMap id="userInfoMap" type="UserInfo">
+		<id property="user_id" column="user_id" />
+		<result property="user_name" column="user_name" />
+		<result property="pass_word" column="pass_word" />
+	</resultMap>
+	
+	<sql id="r_clause_gather_default">
+		<if test="user_id != null and user_id != ''"> and USER_ID = #{user_id}</if>
+		<if test="user_name != null and user_name != ''"> and USER_NAME = #{user_name}</if>
+		<if test="pass_word != null and pass_word != ''"> and PASS_WORD = #{pass_word}</if>
+		
+		<if test="param.user_name_like != null and param.user_name_like != ''"> and USER_NAME like CONCAT('%',#{param.user_name_like},'%')</if>
+	</sql>
+	
+	<sql id="ud_clause_gather_default">
+		<choose>
+			<when test="user_id != null">user_id=#{user_id}</when>
+			<when test="user_id == null">
+				<if test="pks != null">
+					user_id in <foreach item="item" index="index" collection="pks" open="(" separator="," close=")">#{item}</foreach>
+				</if> 
+			</when>
+			<otherwise>1=0</otherwise>
+		</choose>
+	</sql>
+
+	<select id="count" parameterType="UserInfo" resultType="long">
+		select count(*) from USER_INFO
+		<where>
+			<include refid="r_clause_gather_default"/>
+		</where>
+	</select>
+
+	<select id="select" parameterType="UserInfo" resultMap="userInfoMap">
+		select * from USER_INFO
+		<where>
+			<include refid="r_clause_gather_default"/>
+		</where>
+	</select>
+
+	<select id="selectList" parameterType="UserInfo" resultMap="userInfoMap">
+		select * from USER_INFO
+		<where>
+			<include refid="r_clause_gather_default"/>
+		</where>
+	</select>
+
+	<select id="selectPaginatedList" parameterType="UserInfo" resultMap="userInfoMap">
+		select * from USER_INFO
+		<where>
+			<include refid="r_clause_gather_default"/>
+		</where>
+		limit #{row.first}, #{row.count}
+	</select>
+
+	<insert id="insert" parameterType="UserInfo">
+		<![CDATA[insert into USER_INFO ( ]]>
+		<trim suffixOverrides=","> 
+			<if test="user_id != null">USER_ID,</if>
+			<if test="user_name != null">USER_NAME,</if>
+			<if test="pass_word != null">PASS_WORD,</if>
+			<if test="birthday != null">BIRTHDAY</if>
+		</trim>
+		<![CDATA[ ) values ( ]]>
+		<trim suffixOverrides=",">
+			<if test="user_id != null">#{user_id},</if>
+			<if test="user_name != null">#{user_name},</if>
+			<if test="pass_word != null">#{pass_word},</if>
+			<if test="birthday != null">#{birthday},</if>
+		</trim>
+		<![CDATA[ ) ]]>
+	</insert>
+
+	<update id="update" parameterType="UserInfo">
+		update USER_INFO
+		<set> 
+			<if test="user_id != null">USER_ID = #{user_id},</if>
+			<if test="user_name != null">USER_NAME = #{user_name},</if>
+			<if test="pass_word != null">PASS_WORD = #{pass_word},</if>
+			<if test="birthday != null">BIRTHDAY = #{birthday},</if>
+		</set>
+		<where>
+			<include refid="ud_clause_gather_default"/>
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="UserInfo">
+		delete from USER_INFO
+		<where>
+			<include refid="ud_clause_gather_default"/>
+		</where>
+	</delete>
+
+</mapper>

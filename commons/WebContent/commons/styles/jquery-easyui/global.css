@@ -1,0 +1,49 @@
+*{
+	font-size:12px;
+}
+body {
+    font-size:12px;
+    margin:0;
+}
+h2 {
+    font-size:18px;
+    color:#333;
+    font-weight:bold;
+    margin:0;
+    margin-bottom:15px;
+}
+.message-info{
+	background:#FFFEE6;
+	color:#8F5700;
+	padding:5px;
+}
+.message-tip{
+	width:24px;
+	height:16px;
+	float:left;
+}
+form {
+	margin: 0px;
+	padding: 0px;
+}
+.form {
+	border-collapse: collapse;
+}
+.form th {
+	font-weight:800;
+	background-color:#CCC;
+}
+.tdLabel {
+	text-align:right;
+	font-weight:border;
+	font-weight:800;
+}
+.required {
+	color:#F00;
+	padding:0px 5px;
+} 
+.inputx {
+	height:16px;
+	line-height:16px;
+	padding:0px 16px 0px 0px;
+}

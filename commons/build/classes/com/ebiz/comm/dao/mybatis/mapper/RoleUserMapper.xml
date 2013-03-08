@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ebiz.comm.dao.RoleUserDao">
+	<cache />
+
+	<resultMap id="roleUserMap" type="RoleUser">
+		<id column="USER_ID" property="user_id" />
+		<id column="ROLE_ID" property="role_id" />
+	</resultMap>
+
+	<sql id="r_clause_gather_default">
+		<!-- Equal query -->
+		<if test="user_id != null and user_id != ''"> and USER_ID = #{user_id}</if>
+		<if test="role_id != null and role_id != ''"> and ROLE_ID = #{role_id}</if>
+
+		<!-- Like query -->
+		
+		<!-- Number compare query -->
+		<if test="param.user_id_gt != null and param.user_id_gt != ''"><![CDATA[ and USER_ID > #{param.user_id_gt}]]></if>
+		<if test="param.user_id_lt != null and param.user_id_lt != ''"><![CDATA[ and USER_ID < #{param.user_id_lt}]]></if>
+		<if test="param.user_id_ge != null and param.user_id_ge != ''"><![CDATA[ and USER_ID >= #{param.user_id_ge}]]></if>
+		<if test="param.user_id_le != null and param.user_id_le != ''"><![CDATA[ and USER_ID <= #{param.user_id_le}]]></if>
+		<if test="param.role_id_gt != null and param.role_id_gt != ''"><![CDATA[ and ROLE_ID > #{param.role_id_gt}]]></if>
+		<if test="param.role_id_lt != null and param.role_id_lt != ''"><![CDATA[ and ROLE_ID < #{param.role_id_lt}]]></if>
+		<if test="param.role_id_ge != null and param.role_id_ge != ''"><![CDATA[ and ROLE_ID >= #{param.role_id_ge}]]></if>
+		<if test="param.role_id_le != null and param.role_id_le != ''"><![CDATA[ and ROLE_ID <= #{param.role_id_le}]]></if>
+		
+		<!-- Date compare query -->
+	</sql>
+
+	<sql id="ud_clause_gather_default">
+		<choose>
+			<when test="role_id != null and user_id != null">role_id=#{role_id} and user_id=#{user_id}</when>
+			<when test="role_id == null or user_id == null">
+				<if test="pks != null">
+					1=0
+				</if> 
+			</when>
+			<otherwise>1=0</otherwise>
+		</choose>
+	</sql>
+
+	<sql id="orderby_clause_gather_default">
+		<if test="row.sort == null or row.sort == ''"> USER_ID </if>
+		<if test="row.sort != null and row.sort != ''">
+			<choose>
+				<when test="row.sort == 'user_id'"> USER_ID </when>
+				<when test="row.sort == 'role_id'"> ROLE_ID </when>
+				<otherwise> USER_ID </otherwise>
+			</choose>
+		</if>
+		<if test="row.order == null or row.order == ''"> ASC </if>
+		<if test="row.order != null and row.order != ''">
+			<choose>
+				<when test="row.order == 'asc' or row.order == 'ASC'">ASC</when>
+				<when test="row.order == 'desc' or row.order == 'DESC'">DESC</when>
+				<otherwise> ASC </otherwise>
+			</choose>
+		</if>
+	</sql>
+
+	<select id="count" parameterType="RoleUser" resultType="long">
+		select count(1) from ROLE_USER
+		<where>
+			<include refid="r_clause_gather_default"/>
+		</where>
+	</select>
+
+	<select id="select" parameterType="RoleUser" resultMap="roleUserMap">
+		select * from ROLE_USER
+		<where>
+			<include refid="r_clause_gather_default"/>
+		</where>
+	</select>
+
+	<select id="selectList" parameterType="RoleUser" resultMap="roleUserMap">
+		select * from ROLE_USER
+		<where>
+			<include refid="r_clause_gather_default"/>
+		</where>
+		order by
+		<include refid="orderby_clause_gather_default"/>
+	</select>
+
+	<select id="selectPaginatedList" parameterType="RoleUser" resultMap="roleUserMap">
+		select * from ROLE_USER
+		<where>
+			<include refid="r_clause_gather_default"/>
+		</where>
+		order by
+		<include refid="orderby_clause_gather_default"/>
+		limit #{row.first}, #{row.count}
+	</select>
+
+	<insert id="insert" parameterType="RoleUser">
+		<![CDATA[insert into ROLE_USER ( ]]>
+		<trim suffixOverrides=","> 
+			<if test="user_id != null and user_id != ''">USER_ID,</if>
+			<if test="role_id != null and role_id != ''">ROLE_ID,</if>
+		</trim>
+		<![CDATA[ ) values ( ]]>
+		<trim suffixOverrides=",">
+			<if test="user_id != null and user_id != ''">#{user_id},</if>
+			<if test="role_id != null and role_id != ''">#{role_id},</if>
+		</trim>
+		<![CDATA[ ) ]]>
+	</insert>
+
+	<update id="update" parameterType="RoleUser">
+		update ROLE_USER
+		<set>
+			<if test="user_id != null and user_id != ''">USER_ID = #{user_id},</if>
+			<if test="role_id != null and role_id != ''">ROLE_ID = #{role_id},</if>
+		</set>
+		<where>
+			<include refid="ud_clause_gather_default"/>
+		</where>
+	</update>
+	
+	<delete id="delete" parameterType="RoleUser">
+		delete from ROLE_USER
+		<where>
+			<include refid="ud_clause_gather_default"/>
+		</where>
+	</delete>
+
+</mapper>

@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ebiz.comm.dao.UserInfoDao">
+	<cache />
+
+	<resultMap id="userInfoMap" type="UserInfo">
+		<id column="USER_ID" property="user_id" />
+		<result column="USER_NAME" property="user_name" />
+		<result column="PASS_WORD" property="pass_word" />
+		<result column="REAL_NAME" property="real_name" />
+		<result column="EMAIL" property="email" />
+		<result column="SEX" property="sex" />
+		<result column="BIRTHDAY" property="birthday" />
+		<result column="TEL" property="tel" />
+		<result column="MOBILE" property="mobile" />
+		<result column="P_INDEX" property="p_index" />
+		<result column="ADDR" property="addr" />
+		<result column="QQ" property="qq" />
+		<result column="MSN" property="msn" />
+		<result column="LOGIN_COUNT" property="login_count" />
+		<result column="LAST_LOGIN_DATE" property="last_login_date" />
+		<result column="LAST_LOGIN_IP" property="last_login_ip" />
+		<result column="IS_DEL" property="is_del" />
+		<result column="IS_ACTIVE" property="is_active" />
+		<result column="ACTIVE_CODE" property="active_code" />
+		<result column="ADD_DATE" property="add_date" />
+	</resultMap>
+
+	<sql id="r_clause_gather_default">
+		<!-- Equal query -->
+		<if test="user_id != null and user_id != ''"> and USER_ID = #{user_id}</if>
+		<if test="user_name != null and user_name != ''"> and USER_NAME = #{user_name}</if>
+		<if test="pass_word != null and pass_word != ''"> and PASS_WORD = #{pass_word}</if>
+		<if test="real_name != null and real_name != ''"> and REAL_NAME = #{real_name}</if>
+		<if test="email != null and email != ''"> and EMAIL = #{email}</if>
+		<if test="sex != null and sex != ''"> and SEX = #{sex}</if>
+		<if test="birthday != null and birthday != ''"> and BIRTHDAY = #{birthday}</if>
+		<if test="tel != null and tel != ''"> and TEL = #{tel}</if>
+		<if test="mobile != null and mobile != ''"> and MOBILE = #{mobile}</if>
+		<if test="p_index != null and p_index != ''"> and P_INDEX = #{p_index}</if>
+		<if test="addr != null and addr != ''"> and ADDR = #{addr}</if>
+		<if test="qq != null and qq != ''"> and QQ = #{qq}</if>
+		<if test="msn != null and msn != ''"> and MSN = #{msn}</if>
+		<if test="login_count != null and login_count != ''"> and LOGIN_COUNT = #{login_count}</if>
+		<if test="last_login_date != null and last_login_date != ''"> and LAST_LOGIN_DATE = #{last_login_date}</if>
+		<if test="last_login_ip != null and last_login_ip != ''"> and LAST_LOGIN_IP = #{last_login_ip}</if>
+		<if test="is_del != null and is_del != ''"> and IS_DEL = #{is_del}</if>
+		<if test="is_active != null and is_active != ''"> and IS_ACTIVE = #{is_active}</if>
+		<if test="active_code != null and active_code != ''"> and ACTIVE_CODE = #{active_code}</if>
+		<if test="add_date != null and add_date != ''"> and ADD_DATE = #{add_date}</if>
+
+		<!-- Like query -->
+		<if test="param.user_name_like != null and param.user_name_like != ''"> and UPPER(USER_NAME) like CONCAT('%',UPPER(#{param.user_name_like}),'%')</if>
+		<if test="param.pass_word_like != null and param.pass_word_like != ''"> and UPPER(PASS_WORD) like CONCAT('%',UPPER(#{param.pass_word_like}),'%')</if>
+		<if test="param.real_name_like != null and param.real_name_like != ''"> and UPPER(REAL_NAME) like CONCAT('%',UPPER(#{param.real_name_like}),'%')</if>
+		<if test="param.email_like != null and param.email_like != ''"> and UPPER(EMAIL) like CONCAT('%',UPPER(#{param.email_like}),'%')</if>
+		<if test="param.tel_like != null and param.tel_like != ''"> and UPPER(TEL) like CONCAT('%',UPPER(#{param.tel_like}),'%')</if>
+		<if test="param.mobile_like != null and param.mobile_like != ''"> and UPPER(MOBILE) like CONCAT('%',UPPER(#{param.mobile_like}),'%')</if>
+		<if test="param.addr_like != null and param.addr_like != ''"> and UPPER(ADDR) like CONCAT('%',UPPER(#{param.addr_like}),'%')</if>
+		<if test="param.qq_like != null and param.qq_like != ''"> and UPPER(QQ) like CONCAT('%',UPPER(#{param.qq_like}),'%')</if>
+		<if test="param.msn_like != null and param.msn_like != ''"> and UPPER(MSN) like CONCAT('%',UPPER(#{param.msn_like}),'%')</if>
+		<if test="param.last_login_ip_like != null and param.last_login_ip_like != ''"> and UPPER(LAST_LOGIN_IP) like CONCAT('%',UPPER(#{param.last_login_ip_like}),'%')</if>
+		<if test="param.active_code_like != null and param.active_code_like != ''"> and UPPER(ACTIVE_CODE) like CONCAT('%',UPPER(#{param.active_code_like}),'%')</if>
+		
+		<!-- Number compare query -->
+		<if test="param.sex_gt != null and param.sex_gt != ''"><![CDATA[ and SEX > #{param.sex_gt}]]></if>
+		<if test="param.sex_lt != null and param.sex_lt != ''"><![CDATA[ and SEX < #{param.sex_lt}]]></if>
+		<if test="param.sex_ge != null and param.sex_ge != ''"><![CDATA[ and SEX >= #{param.sex_ge}]]></if>
+		<if test="param.sex_le != null and param.sex_le != ''"><![CDATA[ and SEX <= #{param.sex_le}]]></if>
+		<if test="param.p_index_gt != null and param.p_index_gt != ''"><![CDATA[ and P_INDEX > #{param.p_index_gt}]]></if>
+		<if test="param.p_index_lt != null and param.p_index_lt != ''"><![CDATA[ and P_INDEX < #{param.p_index_lt}]]></if>
+		<if test="param.p_index_ge != null and param.p_index_ge != ''"><![CDATA[ and P_INDEX >= #{param.p_index_ge}]]></if>
+		<if test="param.p_index_le != null and param.p_index_le != ''"><![CDATA[ and P_INDEX <= #{param.p_index_le}]]></if>
+		<if test="param.login_count_gt != null and param.login_count_gt != ''"><![CDATA[ and LOGIN_COUNT > #{param.login_count_gt}]]></if>
+		<if test="param.login_count_lt != null and param.login_count_lt != ''"><![CDATA[ and LOGIN_COUNT < #{param.login_count_lt}]]></if>
+		<if test="param.login_count_ge != null and param.login_count_ge != ''"><![CDATA[ and LOGIN_COUNT >= #{param.login_count_ge}]]></if>
+		<if test="param.login_count_le != null and param.login_count_le != ''"><![CDATA[ and LOGIN_COUNT <= #{param.login_count_le}]]></if>
+		<if test="param.is_del_gt != null and param.is_del_gt != ''"><![CDATA[ and IS_DEL > #{param.is_del_gt}]]></if>
+		<if test="param.is_del_lt != null and param.is_del_lt != ''"><![CDATA[ and IS_DEL < #{param.is_del_lt}]]></if>
+		<if test="param.is_del_ge != null and param.is_del_ge != ''"><![CDATA[ and IS_DEL >= #{param.is_del_ge}]]></if>
+		<if test="param.is_del_le != null and param.is_del_le != ''"><![CDATA[ and IS_DEL <= #{param.is_del_le}]]></if>
+		<if test="param.is_active_gt != null and param.is_active_gt != ''"><![CDATA[ and IS_ACTIVE > #{param.is_active_gt}]]></if>
+		<if test="param.is_active_lt != null and param.is_active_lt != ''"><![CDATA[ and IS_ACTIVE < #{param.is_active_lt}]]></if>
+		<if test="param.is_active_ge != null and param.is_active_ge != ''"><![CDATA[ and IS_ACTIVE >= #{param.is_active_ge}]]></if>
+		<if test="param.is_active_le != null and param.is_active_le != ''"><![CDATA[ and IS_ACTIVE <= #{param.is_active_le}]]></if>
+		
+		<!-- Date compare query -->
+		<if test="param.birthday_ge != null and param.birthday_ge != ''"><![CDATA[ and BIRTHDAY >= date_format (#{param.birthday_ge}, '%Y-%m-%d %H:%i:%S')]]></if>
+		<if test="param.birthday_lt != null and param.birthday_lt != ''"><![CDATA[ and BIRTHDAY < date_format (#{param.birthday_lt}, '%Y-%m-%d %H:%i:%S')]]></if>
+		<if test="param.birthday_ge_now == 'true'"><![CDATA[ and BIRTHDAY >= date_format (now(), '%Y-%m-%d %H:%i:%S')]]></if>
+		<if test="param.birthday_lt_now == 'true'"><![CDATA[ and BIRTHDAY < date_format (now(), '%Y-%m-%d %H:%i:%S')]]></if>
+		<if test="param.last_login_date_ge != null and param.last_login_date_ge != ''"><![CDATA[ and LAST_LOGIN_DATE >= date_format (#{param.last_login_date_ge}, '%Y-%m-%d %H:%i:%S')]]></if>
+		<if test="param.last_login_date_lt != null and param.last_login_date_lt != ''"><![CDATA[ and LAST_LOGIN_DATE < date_format (#{param.last_login_date_lt}, '%Y-%m-%d %H:%i:%S')]]></if>
+		<if test="param.last_login_date_ge_now == 'true'"><![CDATA[ and LAST_LOGIN_DATE >= date_format (now(), '%Y-%m-%d %H:%i:%S')]]></if>
+		<if test="param.last_login_date_lt_now == 'true'"><![CDATA[ and LAST_LOGIN_DATE < date_format (now(), '%Y-%m-%d %H:%i:%S')]]></if>
+		<if test="param.add_date_ge != null and param.add_date_ge != ''"><![CDATA[ and ADD_DATE >= date_format (#{param.add_date_ge}, '%Y-%m-%d %H:%i:%S')]]></if>
+		<if test="param.add_date_lt != null and param.add_date_lt != ''"><![CDATA[ and ADD_DATE < date_format (#{param.add_date_lt}, '%Y-%m-%d %H:%i:%S')]]></if>
+		<if test="param.add_date_ge_now == 'true'"><![CDATA[ and ADD_DATE >= date_format (now(), '%Y-%m-%d %H:%i:%S')]]></if>
+		<if test="param.add_date_lt_now == 'true'"><![CDATA[ and ADD_DATE < date_format (now(), '%Y-%m-%d %H:%i:%S')]]></if>
+	</sql>
+
+	<sql id="ud_clause_gather_default">
+		<choose>
+			<when test="user_id != null">user_id=#{user_id}</when>
+			<when test="user_id == null">
+				<if test="pks != null">
+					USER_ID in <foreach item="item" index="index" collection="pks" open="(" separator="," close=")">#{item}</foreach>
+				</if> 
+			</when>
+			<otherwise>1=0</otherwise>
+		</choose>
+	</sql>
+
+	<sql id="orderby_clause_gather_default">
+		<if test="row.sort == null or row.sort == ''"> USER_ID </if>
+		<if test="row.sort != null and row.sort != ''">
+			<choose>
+				<when test="row.sort == 'user_id'"> USER_ID </when>
+				<when test="row.sort == 'user_name'"> USER_NAME </when>
+				<when test="row.sort == 'pass_word'"> PASS_WORD </when>
+				<when test="row.sort == 'real_name'"> REAL_NAME </when>
+				<when test="row.sort == 'email'"> EMAIL </when>
+				<when test="row.sort == 'sex'"> SEX </when>
+				<when test="row.sort == 'birthday'"> BIRTHDAY </when>
+				<when test="row.sort == 'tel'"> TEL </when>
+				<when test="row.sort == 'mobile'"> MOBILE </when>
+				<when test="row.sort == 'p_index'"> P_INDEX </when>
+				<when test="row.sort == 'addr'"> ADDR </when>
+				<when test="row.sort == 'qq'"> QQ </when>
+				<when test="row.sort == 'msn'"> MSN </when>
+				<when test="row.sort == 'login_count'"> LOGIN_COUNT </when>
+				<when test="row.sort == 'last_login_date'"> LAST_LOGIN_DATE </when>
+				<when test="row.sort == 'last_login_ip'"> LAST_LOGIN_IP </when>
+				<when test="row.sort == 'is_del'"> IS_DEL </when>
+				<when test="row.sort == 'is_active'"> IS_ACTIVE </when>
+				<when test="row.sort == 'active_code'"> ACTIVE_CODE </when>
+				<when test="row.sort == 'add_date'"> ADD_DATE </when>
+				<otherwise> USER_ID </otherwise>
+			</choose>
+		</if>
+		<if test="row.order == null or row.order == ''"> ASC </if>
+		<if test="row.order != null and row.order != ''">
+			<choose>
+				<when test="row.order == 'asc' or row.order == 'ASC'">ASC</when>
+				<when test="row.order == 'desc' or row.order == 'DESC'">DESC</when>
+				<otherwise> ASC </otherwise>
+			</choose>
+		</if>
+	</sql>
+
+	<select id="count" parameterType="UserInfo" resultType="long">
+		select count(1) from USER_INFO
+		<where>
+			<include refid="r_clause_gather_default"/>
+		</where>
+	</select>
+
+	<select id="select" parameterType="UserInfo" resultMap="userInfoMap">
+		select * from USER_INFO
+		<where>
+			<include refid="r_clause_gather_default"/>
+		</where>
+	</select>
+
+	<select id="selectList" parameterType="UserInfo" resultMap="userInfoMap">
+		select * from USER_INFO
+		<where>
+			<include refid="r_clause_gather_default"/>
+		</where>
+		order by
+		<include refid="orderby_clause_gather_default"/>
+	</select>
+
+	<select id="selectPaginatedList" parameterType="UserInfo" resultMap="userInfoMap">
+		select * from USER_INFO
+		<where>
+			<include refid="r_clause_gather_default"/>
+		</where>
+		order by
+		<include refid="orderby_clause_gather_default"/>
+		limit #{row.first}, #{row.count}
+	</select>
+
+	<insert id="insert" parameterType="UserInfo">
+		<![CDATA[insert into USER_INFO ( ]]>
+		<trim suffixOverrides=","> 
+			<if test="user_id != null and user_id != ''">USER_ID,</if>
+			<if test="user_name != null and user_name != ''">USER_NAME,</if>
+			<if test="pass_word != null and pass_word != ''">PASS_WORD,</if>
+			<if test="real_name != null and real_name != ''">REAL_NAME,</if>
+			<if test="email != null and email != ''">EMAIL,</if>
+			<if test="sex != null and sex != ''">SEX,</if>
+			<if test="birthday != null and birthday != ''">BIRTHDAY,</if>
+			<if test="tel != null and tel != ''">TEL,</if>
+			<if test="mobile != null and mobile != ''">MOBILE,</if>
+			<if test="p_index != null and p_index != ''">P_INDEX,</if>
+			<if test="addr != null and addr != ''">ADDR,</if>
+			<if test="qq != null and qq != ''">QQ,</if>
+			<if test="msn != null and msn != ''">MSN,</if>
+			<if test="login_count != null and login_count != ''">LOGIN_COUNT,</if>
+			<if test="last_login_date != null and last_login_date != ''">LAST_LOGIN_DATE,</if>
+			<if test="last_login_ip != null and last_login_ip != ''">LAST_LOGIN_IP,</if>
+			<if test="is_del != null and is_del != ''">IS_DEL,</if>
+			<if test="is_active != null and is_active != ''">IS_ACTIVE,</if>
+			<if test="active_code != null and active_code != ''">ACTIVE_CODE,</if>
+			<if test="add_date != null and add_date != ''">ADD_DATE,</if>
+		</trim>
+		<![CDATA[ ) values ( ]]>
+		<trim suffixOverrides=",">
+			<if test="user_id != null and user_id != ''">#{user_id},</if>
+			<if test="user_name != null and user_name != ''">#{user_name},</if>
+			<if test="pass_word != null and pass_word != ''">#{pass_word},</if>
+			<if test="real_name != null and real_name != ''">#{real_name},</if>
+			<if test="email != null and email != ''">#{email},</if>
+			<if test="sex != null and sex != ''">#{sex},</if>
+			<if test="birthday != null and birthday != ''">#{birthday},</if>
+			<if test="tel != null and tel != ''">#{tel},</if>
+			<if test="mobile != null and mobile != ''">#{mobile},</if>
+			<if test="p_index != null and p_index != ''">#{p_index},</if>
+			<if test="addr != null and addr != ''">#{addr},</if>
+			<if test="qq != null and qq != ''">#{qq},</if>
+			<if test="msn != null and msn != ''">#{msn},</if>
+			<if test="login_count != null and login_count != ''">#{login_count},</if>
+			<if test="last_login_date != null and last_login_date != ''">#{last_login_date},</if>
+			<if test="last_login_ip != null and last_login_ip != ''">#{last_login_ip},</if>
+			<if test="is_del != null and is_del != ''">#{is_del},</if>
+			<if test="is_active != null and is_active != ''">#{is_active},</if>
+			<if test="active_code != null and active_code != ''">#{active_code},</if>
+			<if test="add_date != null and add_date != ''">#{add_date},</if>
+		</trim>
+		<![CDATA[ ) ]]>
+	</insert>
+
+	<update id="update" parameterType="UserInfo">
+		update USER_INFO
+		<set>
+			<if test="user_id != null and user_id != ''">USER_ID = #{user_id},</if>
+			<if test="user_name != null and user_name != ''">USER_NAME = #{user_name},</if>
+			<if test="pass_word != null and pass_word != ''">PASS_WORD = #{pass_word},</if>
+			<if test="real_name != null and real_name != ''">REAL_NAME = #{real_name},</if>
+			<if test="email != null and email != ''">EMAIL = #{email},</if>
+			<if test="sex != null and sex != ''">SEX = #{sex},</if>
+			<if test="birthday != null and birthday != ''">BIRTHDAY = #{birthday},</if>
+			<if test="tel != null and tel != ''">TEL = #{tel},</if>
+			<if test="mobile != null and mobile != ''">MOBILE = #{mobile},</if>
+			<if test="p_index != null and p_index != ''">P_INDEX = #{p_index},</if>
+			<if test="addr != null and addr != ''">ADDR = #{addr},</if>
+			<if test="qq != null and qq != ''">QQ = #{qq},</if>
+			<if test="msn != null and msn != ''">MSN = #{msn},</if>
+			<if test="login_count != null and login_count != ''">LOGIN_COUNT = #{login_count},</if>
+			<if test="last_login_date != null and last_login_date != ''">LAST_LOGIN_DATE = #{last_login_date},</if>
+			<if test="last_login_ip != null and last_login_ip != ''">LAST_LOGIN_IP = #{last_login_ip},</if>
+			<if test="is_del != null and is_del != ''">IS_DEL = #{is_del},</if>
+			<if test="is_active != null and is_active != ''">IS_ACTIVE = #{is_active},</if>
+			<if test="active_code != null and active_code != ''">ACTIVE_CODE = #{active_code},</if>
+			<if test="add_date != null and add_date != ''">ADD_DATE = #{add_date},</if>
+		</set>
+		<where>
+			<include refid="ud_clause_gather_default"/>
+		</where>
+	</update>
+	
+	<delete id="delete" parameterType="UserInfo">
+		delete from USER_INFO
+		<where>
+			<include refid="ud_clause_gather_default"/>
+		</where>
+	</delete>
+
+</mapper>

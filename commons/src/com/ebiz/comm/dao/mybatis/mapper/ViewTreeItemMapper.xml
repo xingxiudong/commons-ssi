@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ebiz.comm.dao.ViewTreeItemDao">
+	<cache />
+
+	<resultMap id="viewTreeItemMap" type="ViewTreeItem">
+		<result column="ID" property="id" />
+		<result column="PAR_ID" property="par_id" />
+		<result column="TEXT" property="text" />
+		<result column="TARGET" property="target" />
+		<result column="CHECKED" property="checked" />
+		<result column="STATE" property="state" />
+		<result column="ICON_CLS" property="icon_cls" />
+	</resultMap>
+
+	<sql id="r_clause_gather_default">
+		<if test="id != null and id != ''"> and ID = #{id}</if>
+		<if test="par_id != null and par_id != ''"> and PAR_ID = #{par_id}</if>
+		<if test="text != null and text != ''"> and TEXT = #{text}</if>
+		<if test="target != null and target != ''"> and TARGET = #{target}</if>
+		<if test="checked != null and checked != ''"> and CHECKED = #{checked}</if>
+		<if test="state != null and state != ''"> and STATE = #{state}</if>
+		<if test="icon_cls != null and icon_cls != ''"> and ICON_CLS = #{icon_cls}</if>
+
+		<if test="param.text_like != null and param.text_like != ''"> and UPPER(TEXT) like CONCAT('%',UPPER(#{param.text_like}),'%')</if>
+		<if test="param.target_like != null and param.target_like != ''"> and UPPER(TARGET) like CONCAT('%',UPPER(#{param.target_like}),'%')</if>
+		<if test="param.checked_like != null and param.checked_like != ''"> and UPPER(CHECKED) like CONCAT('%',UPPER(#{param.checked_like}),'%')</if>
+		<if test="param.state_like != null and param.state_like != ''"> and UPPER(STATE) like CONCAT('%',UPPER(#{param.state_like}),'%')</if>
+		
+		<if test="param.id_gt != null and param.id_gt != ''"><![CDATA[ and ID > #{param.id_gt}]]></if>
+		<if test="param.id_lt != null and param.id_lt != ''"><![CDATA[ and ID < #{param.id_lt}]]></if>
+		<if test="param.id_ge != null and param.id_ge != ''"><![CDATA[ and ID >= #{param.id_ge}]]></if>
+		<if test="param.id_le != null and param.id_le != ''"><![CDATA[ and ID <= #{param.id_le}]]></if>
+		<if test="param.par_id_gt != null and param.par_id_gt != ''"><![CDATA[ and PAR_ID > #{param.par_id_gt}]]></if>
+		<if test="param.par_id_lt != null and param.par_id_lt != ''"><![CDATA[ and PAR_ID < #{param.par_id_lt}]]></if>
+		<if test="param.par_id_ge != null and param.par_id_ge != ''"><![CDATA[ and PAR_ID >= #{param.par_id_ge}]]></if>
+		<if test="param.par_id_le != null and param.par_id_le != ''"><![CDATA[ and PAR_ID <= #{param.par_id_le}]]></if>
+	</sql>
+
+	<sql id="ud_clause_gather_default">
+		<choose>
+			<when test=""></when>
+			<when test="">
+				<if test="pks != null">
+					1=0
+				</if> 
+			</when>
+			<otherwise>1=0</otherwise>
+		</choose>
+	</sql>
+
+	<select id="count" parameterType="ViewTreeItem" resultType="long">
+		select count(1) from VIEW_TREE_ITEM
+		<where>
+			<include refid="r_clause_gather_default"/>
+		</where>
+	</select>
+
+	<select id="select" parameterType="ViewTreeItem" resultMap="viewTreeItemMap">
+		select * from VIEW_TREE_ITEM
+		<where>
+			<include refid="r_clause_gather_default"/>
+		</where>
+	</select>
+
+	<select id="selectList" parameterType="ViewTreeItem" resultMap="viewTreeItemMap">
+		select * from VIEW_TREE_ITEM
+		<where>
+			<include refid="r_clause_gather_default"/>
+		</where>
+	</select>
+
+	<select id="selectPaginatedList" parameterType="ViewTreeItem" resultMap="viewTreeItemMap">
+		select * from VIEW_TREE_ITEM
+		<where>
+			<include refid="r_clause_gather_default"/>
+		</where>
+		limit #{row.first}, #{row.count}
+	</select>
+
+	<insert id="insert" parameterType="ViewTreeItem">
+		<![CDATA[insert into VIEW_TREE_ITEM ( ]]>
+		<trim suffixOverrides=","> 
+			<if test="id != null and id != ''">ID,</if>
+			<if test="par_id != null and par_id != ''">PAR_ID,</if>
+			<if test="text != null and text != ''">TEXT,</if>
+			<if test="target != null and target != ''">TARGET,</if>
+			<if test="checked != null and checked != ''">CHECKED,</if>
+			<if test="state != null and state != ''">STATE,</if>
+			<if test="icon_cls != null and icon_cls != ''">ICON_CLS,</if>
+		</trim>
+		<![CDATA[ ) values ( ]]>
+		<trim suffixOverrides=",">
+			<if test="id != null and id != ''">#{id},</if>
+			<if test="par_id != null and par_id != ''">#{par_id},</if>
+			<if test="text != null and text != ''">#{text},</if>
+			<if test="target != null and target != ''">#{target},</if>
+			<if test="checked != null and checked != ''">#{checked},</if>
+			<if test="state != null and state != ''">#{state},</if>
+			<if test="icon_cls != null and icon_cls != ''">#{icon_cls},</if>
+		</trim>
+		<![CDATA[ ) ]]>
+	</insert>
+
+	<update id="update" parameterType="ViewTreeItem">
+		update VIEW_TREE_ITEM
+		<set>
+			<if test="id != null and id != ''">ID = #{id},</if>
+			<if test="par_id != null and par_id != ''">PAR_ID = #{par_id},</if>
+			<if test="text != null and text != ''">TEXT = #{text},</if>
+			<if test="target != null and target != ''">TARGET = #{target},</if>
+			<if test="checked != null and checked != ''">CHECKED = #{checked},</if>
+			<if test="state != null and state != ''">STATE = #{state},</if>
+			<if test="icon_cls != null and icon_cls != ''">ICON_CLS = #{icon_cls},</if>
+		</set>
+		<where>
+			<include refid="ud_clause_gather_default"/>
+		</where>
+	</update>
+	
+	<delete id="delete" parameterType="ViewTreeItem">
+		delete from VIEW_TREE_ITEM
+		<where>
+			<include refid="ud_clause_gather_default"/>
+		</where>
+	</delete>
+
+</mapper>
